@@ -1,17 +1,28 @@
 <!DOCTYPE html>
 <head>
-  <title>OpenAI Quickstart</title>
+  <title>SEO Article Generator</title>
+      <style>
+        h2 {
+            font-size: 24px;
+            color: #333;
+            margin-top: 20px;
+        }
+        p {
+            font-size: 18px;
+            color: #666;
+            margin: 10px 0;
+        }
+    </style>
   <link
     rel="shortcut icon"
     href="{{ url_for('static', filename='dog.png') }}"
   />
   <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
 </head>
-
 <body>
-  <img src="{{ url_for('static', filename='dog.png') }}" class="icon" />
-  <h3>Write My SEO Optimized Article</h3>
-  <form action="/" method="post">
+    <h1>SEO Article Generator</h1>
+    <form method="POST">
+    <form action="/" method="post">
 
     <input type="text" name="keywords" placeholder="Enter one or more keywords" required />
     <input type="text" name="audience" placeholder="Enter a target audience" required  />
@@ -19,7 +30,23 @@
 
     <input type="submit" value="Generate Article" />
   </form>
-  {% if result %}
-  <div class="result">{{ result }}</div>
-  {% endif %}
+
+    {% if result %}
+
+    <div class="article">
+        <div><h4>SEO Optimized Article</h4></div>
+
+        <!-- Split the result into paragraphs -->
+        {% for paragraph in result.split('\n\n') %}
+            {% if loop.index == 1 %}
+                <h2>{{ paragraph }}</h2>
+            {% else %}
+                <p>{{ paragraph }}</p>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
 </body>
+
+
+

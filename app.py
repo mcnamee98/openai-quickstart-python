@@ -35,21 +35,21 @@ def index():
     return render_template("index.html", result=result)
 
 
-def generate_prompt(animal):
-    return """Suggest three names for an animal that is a superhero.
-
-Animal: Cat
-Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline
-Animal: Dog
-Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
-Animal: {}
-Names:""".format(
-        animal.capitalize()
-    )
-
-def gen_article(keywords, audience, length):
-    return """"You are a helpful writing assistant. You will be given a handful of keywords, 
-    a target audience, and an article length. Please write the article to be Search Engine Optimized."
-""".format(
-        audience.capitalize()
-    )
+# def generate_prompt(animal):
+#     return """Suggest three names for an animal that is a superhero.
+#
+# Animal: Cat
+# Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline
+# Animal: Dog
+# Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
+# Animal: {}
+# Names:""".format(
+#         animal.capitalize()
+#     )
+#
+# def gen_article(keywords, audience, length):
+#     return """"You are a helpful writing assistant. You will be given a handful of keywords,
+#     a target audience, and an article length. Please write the article to be Search Engine Optimized."
+# """.format(
+#         audience.capitalize()
+#     )
