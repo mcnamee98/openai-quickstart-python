@@ -10,13 +10,26 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 @app.route("/", methods=("GET", "POST"))
 def index():
     if request.method == "POST":
-        animal = request.form["animal"]
-        response = openai.Completion.create(
-            model="text-davinci-003",
-            prompt=generate_prompt(animal),
-            temperature=0.6,
+
+        keywords = request.form["keywords"]
+        audience = request.form["audience"]
+        length = request.form['length']
+
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful writing assistant."
+                                              "You will be given a handful of keywords, a target audience, and an article length."
+                                              "Please write an article which is Search Engine Optimized."},
+
+                {"role": "user", "content": "Keywords:" + keywords +
+                                            "Target Audience" + audience +
+                                            "Article Length" + length}
+
+            ]
         )
-        return redirect(url_for("index", result=response.choices[0].text))
+
+        return redirect(url_for("index", result=completion.choices[0].message.content))
 
     result = request.args.get("result")
     return render_template("index.html", result=result)
@@ -32,4 +45,11 @@ Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
 Animal: {}
 Names:""".format(
         animal.capitalize()
+    )
+
+def gen_article(keywords, audience, length):
+    return """"You are a helpful writing assistant. You will be given a handful of keywords, 
+    a target audience, and an article length. Please write the article to be Search Engine Optimized."
+""".format(
+        audience.capitalize()
     )
