@@ -1,3 +1,3 @@
-# OpenAI API Quickstart - Python example app
+# SEOpt Writer
 
-- Working repository for work on generating SEO optimized articles -
+- Working repository for work on generating SEO optimized articles 
