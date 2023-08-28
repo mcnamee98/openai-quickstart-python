@@ -1,18 +1,12 @@
 import os
 
 import openai
-from flask import Flask, redirect, render_template, request, url_for
 import psycopg2
 import json
 from flask import Flask, redirect, render_template, request, url_for
 
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
-
-
-# app = Flask(__name__)
-# openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Configure PostgreSQL connection
 conn = psycopg2.connect(
@@ -47,16 +41,11 @@ def index():
 
         result = completion.choices[0].message.content
 
-        # Insert data into the database
         insert_query = """
             INSERT INTO api_calls (input_data, output_data, timestamp)
             VALUES (%s, %s, now())
         """
 
-        insert_query = """
-            INSERT INTO api_calls (input_data, output_data, timestamp)
-            VALUES (%s, %s, now())
-        """
         input_data = {
             "Keywords": keywords,
             "Target Audience": audience,
@@ -65,34 +54,24 @@ def index():
         cur.execute(insert_query, (json.dumps(input_data), json.dumps(result),))
         conn.commit()
 
-        # input_data = f'{{"Keywords": "{keywords}", "Target Audience": "{audience}", "Article Length": "{length}"}}'
-        # result_db = result
-        # cur.execute(insert_query, (input_data, result_db))
-        # conn.commit()
-        # cur.execute(insert_query, (f"Keywords: {keywords}, Target Audience: {audience}, Article Length: {length}", result))
-        # conn.commit()
-
         return render_template("index.html", result=result, keywords=keywords, audience=audience, length=length)
 
     result = request.args.get("result")
     return render_template("index.html", result=result)
 
+@app.route("/previous-articles", methods=["GET"])
+def previous_articles():
+    # Fetch the data from the database (assuming you have a SELECT query)
+    select_query = "SELECT input_data, timestamp FROM api_calls"
+    cur.execute(select_query)
+    previous_data = cur.fetchall()
 
-# def generate_prompt(animal):
-#     return """Suggest three names for an animal that is a superhero.
-#
-# Animal: Cat
-# Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline
-# Animal: Dog
-# Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
-# Animal: {}
-# Names:""".format(
-#         animal.capitalize()
-#     )
-#
-# def gen_article(keywords, audience, length):
-#     return """"You are a helpful writing assistant. You will be given a handful of keywords,
-#     a target audience, and an article length. Please write the article to be Search Engine Optimized."
-# """.format(
-#         audience.capitalize()
-#     )
+    return render_template("previous_articles.html", previous_data=previous_data)
+
+@app.route("/article/<timestamp>", methods=["GET"])
+def article_detail(timestamp):
+    select_query = "SELECT output_data FROM api_calls WHERE timestamp = %s"
+    cur.execute(select_query, (timestamp,))
+    article_content = cur.fetchone()
+
+    return render_template("article_detail.html", article_content=article_content)

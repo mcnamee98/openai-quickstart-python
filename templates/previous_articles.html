@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Previous Articles</title>
+</head>
+<body>
+    <h1>Previously Generated Articles</h1>
+    <ul>
+        {% for data in previous_data %}
+        <li>
+            <a href="{{ url_for('article_detail', timestamp=data[1]) }}">{{ data[0] }}</a>
+        </li>
+
+        {% endfor %}
+        <a href="{{ url_for('index') }}" class="btn btn-primary">Back to Home</a>
+
+    </ul>
+</body>
+</html>

@@ -29,11 +29,15 @@
     <input type="text" name="length" placeholder="Enter an article length" required />
 
     <input type="submit" value="Generate Article" />
+
+    <p> If you'd rather check out previously generated articles, click here! </p>
+    <a href="{{ url_for('previous_articles') }}" class="btn btn-primary">View Previous Articles</a>
+
   </form>
 
     {% if result %}
     <div class="form-inputs">
-        <h2>Form Inputs:</h2>
+        <h2>Most Recent Inputs:</h2>
         <p>Keywords: {{ keywords }}</p>
         <p>Target Audience: {{ audience }}</p>
         <p>Article Length: {{ length }}</p>
