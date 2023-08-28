@@ -32,7 +32,12 @@
   </form>
 
     {% if result %}
-
+    <div class="form-inputs">
+        <h2>Form Inputs:</h2>
+        <p>Keywords: {{ keywords }}</p>
+        <p>Target Audience: {{ audience }}</p>
+        <p>Article Length: {{ length }}</p>
+    </div>
     <div class="article">
         <div><h4>SEO Optimized Article</h4></div>
 
