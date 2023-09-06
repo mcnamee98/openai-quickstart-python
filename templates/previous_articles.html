@@ -2,6 +2,66 @@
 <html>
 <head>
     <title>Previous Articles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+            text-align: center;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px;
+        }
+
+        li {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+            padding: 10px 15px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        li:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #007bff;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <h1>Previously Generated Articles</h1>
@@ -10,10 +70,8 @@
         <li>
             <a href="{{ url_for('article_detail', timestamp=data[1]) }}">{{ data[0] }}</a>
         </li>
-
         {% endfor %}
-        <a href="{{ url_for('index') }}" class="btn btn-primary">Back to Home</a>
-
     </ul>
+    <a href="{{ url_for('index') }}" class="btn">Back to Home</a>
 </body>
 </html>
