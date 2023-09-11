@@ -46,12 +46,19 @@ def index():
             VALUES (%s, %s, now())
         """
 
+        # insert_query = """
+        #     INSERT INTO api_calls_revised_inputs (keywords, length, audience, output, timestamp )
+        #     VALUES (%s, %s, %s, %s, now())
+        # """
+
         input_data = {
             "Keywords": keywords,
             "Target Audience": audience,
             "Article Length": length
         }
         cur.execute(insert_query, (json.dumps(input_data), json.dumps(result),))
+
+        # cur.execute(insert_query, (json.dumps(keywords), json.dumps(length), json.dumps(audience), json.dumps(result),))
         conn.commit()
 
         return render_template("index.html", result=result, keywords=keywords, audience=audience, length=length)
